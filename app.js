@@ -15,4 +15,19 @@ app.get('/produtos', async (req, res) => {
     return  res.send({ produtos });
 });
 
+app.get('/supermercados/produtos', async (req, res) => {
+    try {
+        const supermercados = await db.supermercados.findAll({
+            include: [
+                { association: 'produto' }
+            ]
+        });
+    
+        return res.send(supermercados);
+    } catch (e) {
+        console.log('ERROR', e.message);
+    }
+});
+
+//
 app.listen(PORT, () => console.log('server running on port '+PORT));
